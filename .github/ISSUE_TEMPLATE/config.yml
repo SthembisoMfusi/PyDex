@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: PyDex Community Discussions
+    url: https://github.com/YOUR-USERNAME/PyDex/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: Hackathon Information
+    url: https://github.com/YOUR-USERNAME/PyDex/discussions/categories/hackathon
+    about: Get help and information about the hackathon
