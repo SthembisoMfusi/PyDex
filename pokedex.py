@@ -28,6 +28,11 @@ def main():
         if response.status_code == 200:
             # Parse the JSON response
             data = response.json()
+
+            # HEADER
+            print("╔══════════════════════════════════════╗")
+            print("║             POKÉDEX DATA             ║")  
+            print("╚══════════════════════════════════════╝")
             
             # Display basic Pokémon information
             print(f"Name: {data['name'].title()}")
@@ -36,6 +41,11 @@ def main():
             # Display types
             types = [type_info['type']['name'] for type_info in data['types']]
             print(f"Type(s): {', '.join(types).title()}")
+
+            # FOOTER
+            print("╔══════════════════════════════════════╗")
+            print("║         End of Pokédex Entry         ║")
+            print("╚══════════════════════════════════════╝")
             
         else:
             print(f"Error: Could not find Pokémon '{pokemon_name}'")
