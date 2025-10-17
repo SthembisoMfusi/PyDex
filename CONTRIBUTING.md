@@ -13,7 +13,7 @@ Thank you for your interest in contributing to PyDex! This project is designed t
 ### 2. Clone Your Fork
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/PyDex.git
+git clone https://github.com/SthembisoMfusi/PyDex.git
 cd PyDex
 ```
 

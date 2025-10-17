@@ -22,7 +22,7 @@ PyDex is a simple, easy-to-use Python script that lets you look up Pokémon info
 
 2. **Clone your fork to your local machine:**
    ```bash
-   git clone https://github.com/YOUR-USERNAME/PyDex.git
+   git clone https://github.com/SthembisoMfusi/PyDex.git
    cd PyDex
    ```
 
