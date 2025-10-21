@@ -36,6 +36,15 @@ def main():
             # Display types
             types = [type_info['type']['name'] for type_info in data['types']]
             print(f"Type(s): {', '.join(types).title()}")
+
+            # Display base stats
+            print(f"Base Stats: ")
+            for stat in data['stats']:
+                # Properly formats the stat name first
+                stat_name = stat['stat']['name'].replace('-', ' ').title()
+                if stat_name == 'Hp':
+                    stat_name = 'HP'
+                print(f"  {stat_name}: {stat['base_stat']}")
             
         else:
             print(f"Error: Could not find Pokémon '{pokemon_name}'")
