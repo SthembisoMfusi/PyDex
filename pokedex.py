@@ -53,8 +53,7 @@ def main():
             print(f"Type(s): {', '.join(colored_types)}")
             
         else:
-            print(f"Error: Could not find Pokémon '{pokemon_name}'")
-            print("Please check the spelling and try again.")
+            print(f"Error: Pokémon '{pokemon_name}' not found\nPlease check the spelling and try again.")
             
     except requests.exceptions.RequestException as e:
         print(f"Error: Could not connect to the PokéAPI. {e}")
