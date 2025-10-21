@@ -47,7 +47,7 @@ def main():
                 print(f"  {stat_name}: {stat['base_stat']}")
             
         else:
-            print(f"Error: Could not find Pokémon '{pokemon_name}'")
+            print(f"Error: Pokémon '{pokemon_name}' not found")
             print("Please check the spelling and try again.")
             
     except requests.exceptions.RequestException as e:
