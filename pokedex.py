@@ -3,7 +3,7 @@
 PyDex: A Command-Line Pokedex
 A simple Python script to look up Pokémon information from the PokéAPI.
 """
-
+import random
 import sys
 import requests
 import json
@@ -17,26 +17,30 @@ def main():
     
     pokemon_name = sys.argv[1].lower()
     
-    # Construct the API URL
-    api_url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_name}"
     
     try:
-        # Make the API request
+        api_url = f"https://pokeapi.co/api/v2/pokemon/"
         response = requests.get(api_url)
-        
-        # Check if the request was successful
+
         if response.status_code == 200:
-            # Parse the JSON response
             data = response.json()
             
+            if pokemon_name.lower() == "--random" or pokemon_name.lower() == "--r":
+                random_pokemon = random.choice(data['results'])
+                pokemon_name = random_pokemon['name']
+            
+            # Construct the API URL
+            api_url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_name}"
+            response = requests.get(api_url)
+            data = response.json()
+                
             # Display basic Pokémon information
             print(f"Name: {data['name'].title()}")
             print(f"National Pokédex Number: {data['id']}")
-            
             # Display types
             types = [type_info['type']['name'] for type_info in data['types']]
             print(f"Type(s): {', '.join(types).title()}")
-            
+        
         else:
             print(f"Error: Could not find Pokémon '{pokemon_name}'")
             print("Please check the spelling and try again.")
@@ -47,6 +51,7 @@ def main():
         print(f"Error: Could not parse the response from the API. {e}")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
+    
 
 if __name__ == "__main__":
     main()
