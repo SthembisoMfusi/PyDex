@@ -5,22 +5,45 @@ A simple Python script to look up Pokémon information from the PokéAPI.
 """
 
 import sys
+import argparse
 import requests
 import json
-from colorama import Fore, Style, init
-init(autoreset=True)
+import random
 
 def main():
-    # Check if a Pokémon name was provided
-    if len(sys.argv) != 2:
-        print("Usage: python pokedex.py <pokemon_name>")
+    # creation of an argument parser object to handle CLI arguments
+    parser = argparse.ArgumentParser()
+
+    # adding different arguments
+    parser.add_argument("name", nargs='?', help="enter the name of the Pokemon")
+    parser.add_argument("-r", "--random", action="store_true", help="lists info about a random pokemon")
+    parser.add_argument("-a", "--abilities", action="store_true", help="shows the abilities of a pokemon")
+    parser.add_argument("-s", "--size", action="store_true", help="shows the weight and height of a pokemon")
+    parser.add_argument("-n", "--number", type=int, help="enter the Pokedex ID number of a pokemon")
+    args = parser.parse_args()
+    
+    # if the user adds a --random flag
+    if args.random:
+        # generate a random number between 1 and 1025 corresponding to a Pokemon ID
+        random_id = random.randint(1, 1025)
+        pokemon_name = str(random_id)
+        api_url = f"https://pokeapi.co/api/v2/pokemon/{random_id}"
+
+    # if the user searches by name
+    elif args.name:
+        pokemon_name = args.name.lower()
+        api_url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_name}"
+
+    # if the user searches by id number
+    elif args.number:
+        pokemon_name = args.number
+        api_url = f"https://pokeapi.co/api/v2/pokemon/{int(args.number)}"
+
+    # incase of no argument
+    else:
+        print("Usage: python pokedex.py <pokemon_name> or python pokedex.py --random")
         print("Example: python pokedex.py pikachu")
         sys.exit(1)
-    
-    pokemon_name = sys.argv[1].lower()
-    
-    # Construct the API URL
-    api_url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_name}"
     
     try:
         # Make the API request
@@ -31,7 +54,7 @@ def main():
             # Parse the JSON response
             data = response.json()
             
-            # Display basic Pokémon information
+            # Display basic Pokémon information (always shown)
             print(f"Name: {data['name'].title()}")
             print(f"National Pokédex Number: {data['id']}")
             
@@ -46,7 +69,7 @@ def main():
             print(f"Type(s): {', '.join(types).title()}")
 
             # Display base stats
-            print(f"Base Stats: ")
+            print(f"\nBase Stats:")
             for stat in data['stats']:
                 # Properly formats the stat name first
                 stat_name = stat['stat']['name'].replace('-', ' ').title()
@@ -54,6 +77,28 @@ def main():
                     stat_name = 'HP'
                 print(f"  {stat_name}: {stat['base_stat']}")
             
+            # if the user wants to check the abilities of a pokemon
+            if args.abilities:
+                print("\nAbilities:")
+                i = 1
+                for ability in data['abilities']:
+                    ability_name = ability['ability']['name'].replace('-', ' ').title()
+                    if ability['is_hidden']:
+                        print(f"  Hidden Ability: {ability_name}")
+                    else:
+                        print(f"  Ability {i}: {ability_name}")
+                        i += 1
+
+            # if the user wants the weight and height of a pokemon
+            if args.size:
+                # PokéAPI returns height in decimeters and weight in hectograms
+                # Convert to meters and kilograms
+                height_m = data['height'] / 10  # decimeters to meters
+                weight_kg = data['weight'] / 10  # hectograms to kilograms
+                print(f"\nSize:")
+                print(f"  Height: {height_m} m")
+                print(f"  Weight: {weight_kg} kg")
+                
         else:
             print(f"Error: Pokémon '{pokemon_name}' not found")
             print("Please check the spelling and try again.")

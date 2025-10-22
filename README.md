@@ -6,6 +6,9 @@ PyDex is a simple, easy-to-use Python script that lets you look up Pokémon info
 
 - Look up any Pokémon by name
 - Display basic information including name, Pokédex number, and types
+- View base stats (HP, Attack, Defense, Special Attack, Special Defense, Speed)
+- Optional flags to display abilities (including hidden abilities) and size (height/weight in metric units)
+- Search by Pokédex number or get a random Pokémon
 - Clean, simple command-line interface
 - Uses the free PokéAPI (no API key required)
 
