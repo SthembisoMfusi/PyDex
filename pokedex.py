@@ -58,7 +58,13 @@ def main():
             print(f"Name: {data['name'].title()}")
             print(f"National Pokédex Number: {data['id']}")
             
-            # Display types
+            # Create dictionary of pokemon types and their colors
+            type_colors = {"electric": Fore.YELLOW,
+                           "water": Fore.BLUE,
+                           "fire": Fore.RED,
+                           "flying": Fore.CYAN
+                           }
+            
             types = [type_info['type']['name'] for type_info in data['types']]
             print(f"Type(s): {', '.join(types).title()}")
 
