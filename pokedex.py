@@ -18,7 +18,6 @@ def main():
     parser.add_argument("name", nargs='?', help="enter the name of the Pokemon")
     parser.add_argument("-r", "--random", action="store_true", help="lists info about a random pokemon")
     parser.add_argument("-a", "--abilities", action="store_true", help="shows the abilities of a pokemon")
-    parser.add_argument("-s", "--size", action="store_true", help="shows the weight and height of a pokemon")
     parser.add_argument("-n", "--number", type=int, help="enter the Pokedex ID number of a pokemon")
     args = parser.parse_args()
     
@@ -61,6 +60,12 @@ def main():
             # Display types
             types = [type_info['type']['name'] for type_info in data['types']]
             print(f"Type(s): {', '.join(types).title()}")
+            
+            # Display height and weight (converted to meters and kilograms)
+            height_m = data['height'] / 10  # decimeters to meters
+            weight_kg = data['weight'] / 10  # hectograms to kilograms
+            print(f"Height: {height_m} m")
+            print(f"Weight: {weight_kg} kg")
 
             # Display base stats
             print(f"\nBase Stats:")
@@ -82,16 +87,6 @@ def main():
                     else:
                         print(f"  Ability {i}: {ability_name}")
                         i += 1
-
-            # if the user wants the weight and height of a pokemon
-            if args.size:
-                # PokéAPI returns height in decimeters and weight in hectograms
-                # Convert to meters and kilograms
-                height_m = data['height'] / 10  # decimeters to meters
-                weight_kg = data['weight'] / 10  # hectograms to kilograms
-                print(f"\nSize:")
-                print(f"  Height: {height_m} m")
-                print(f"  Weight: {weight_kg} kg")
                 
         else:
             print(f"Error: Pokémon '{pokemon_name}' not found")
