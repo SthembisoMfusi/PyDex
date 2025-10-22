@@ -1,13 +1,15 @@
-#!/usr/bin/env python3
+    #!/usr/bin/env python3
 """
 PyDex: A Command-Line Pokedex
 A simple Python script to look up Pokémon information from the PokéAPI.
 """
-
+import random
 import sys
 import argparse
 import requests
 import json
+from colorama import Fore, Style, init
+init(autoreset=True)
 import random
 
 def main():
@@ -44,17 +46,28 @@ def main():
         print("Usage: python pokedex.py <pokemon_name> or python pokedex.py --random")
         print("Example: python pokedex.py pikachu")
         sys.exit(1)
+
     
     try:
-        # Make the API request
+        api_url = f"https://pokeapi.co/api/v2/pokemon/"
+        response = requests.get(api_url)
+        pokemon_name = sys.argv[1].lower()
+        data = response.json()
+    
+        if pokemon_name.lower() == "--random" or pokemon_name.lower() == "--r":
+            random_pokemon = random.choice(data['results'])
+            pokemon_name = random_pokemon['name']
+        
+        # Construct the API URL
+        api_url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_name}"
         response = requests.get(api_url)
         
-        # Check if the request was successful
         if response.status_code == 200:
-            # Parse the JSON response
             data = response.json()
+                
+            # Display basic Pokémon information
             
-            # Display basic Pokémon information (always shown)
+          
             print(f"Name: {data['name'].title()}")
             print(f"National Pokédex Number: {data['id']}")
             
@@ -77,6 +90,25 @@ def main():
                     stat_name = 'HP'
                 print(f"  {stat_name}: {stat['base_stat']}")
             
+            # Create dictionary of pokemon types and their colors
+            type_colors = {"electric": Fore.YELLOW,
+                           "water": Fore.BLUE,
+                           "fire": Fore.RED,
+                           "flying": Fore.CYAN
+                           }
+            
+            types = [type_info['type']['name'] for type_info in data['types']]
+            print(f"Type(s): {', '.join(types).title()}")
+
+            # Display base stats
+            print(f"Base Stats: ")
+            for stat in data['stats']:
+                # Properly formats the stat name first
+                stat_name = stat['stat']['name'].replace('-', ' ').title()
+                if stat_name == 'Hp':
+                    stat_name = 'HP'
+                print(f"  {stat_name}: {stat['base_stat']}")
+    
             # if the user wants to check the abilities of a pokemon
             if args.abilities:
                 print("\nAbilities:")
@@ -109,6 +141,7 @@ def main():
         print(f"Error: Could not parse the response from the API. {e}")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
+    
 
 if __name__ == "__main__":
     main()
