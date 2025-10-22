@@ -7,6 +7,8 @@ A simple Python script to look up Pokémon information from the PokéAPI.
 import sys
 import requests
 import json
+from colorama import Fore, Style, init
+init(autoreset=True)
 
 def main():
     # Check if a Pokémon name was provided
@@ -33,13 +35,25 @@ def main():
             print(f"Name: {data['name'].title()}")
             print(f"National Pokédex Number: {data['id']}")
             
-            # Display types
+            # Create dictionary of pokemon types and their colors
+            type_colors = {"electric": Fore.YELLOW,
+                           "water": Fore.BLUE,
+                           "fire": Fore.RED,
+                           "flying": Fore.CYAN
+                           }
+            
             types = [type_info['type']['name'] for type_info in data['types']]
-            print(f"Type(s): {', '.join(types).title()}")
+
+            #Create new list of types in color
+            colored_types = [
+                f"{type_colors.get(type_name.lower(), Fore.WHITE)}{type_name.title()}{Style.RESET_ALL}" for type_name in types
+            ]
+
+            # Display types
+            print(f"Type(s): {', '.join(colored_types)}")
             
         else:
-            print(f"Error: Could not find Pokémon '{pokemon_name}'")
-            print("Please check the spelling and try again.")
+            print(f"Error: Pokémon '{pokemon_name}' not found\nPlease check the spelling and try again.")
             
     except requests.exceptions.RequestException as e:
         print(f"Error: Could not connect to the PokéAPI. {e}")
