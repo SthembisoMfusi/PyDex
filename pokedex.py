@@ -43,17 +43,20 @@ def main():
                            }
             
             types = [type_info['type']['name'] for type_info in data['types']]
+            print(f"Type(s): {', '.join(types).title()}")
 
-            #Create new list of types in color
-            colored_types = [
-                f"{type_colors.get(type_name.lower(), Fore.WHITE)}{type_name.title()}{Style.RESET_ALL}" for type_name in types
-            ]
-
-            # Display types
-            print(f"Type(s): {', '.join(colored_types)}")
+            # Display base stats
+            print(f"Base Stats: ")
+            for stat in data['stats']:
+                # Properly formats the stat name first
+                stat_name = stat['stat']['name'].replace('-', ' ').title()
+                if stat_name == 'Hp':
+                    stat_name = 'HP'
+                print(f"  {stat_name}: {stat['base_stat']}")
             
         else:
-            print(f"Error: Pokémon '{pokemon_name}' not found\nPlease check the spelling and try again.")
+            print(f"Error: Pokémon '{pokemon_name}' not found")
+            print("Please check the spelling and try again.")
             
     except requests.exceptions.RequestException as e:
         print(f"Error: Could not connect to the PokéAPI. {e}")
