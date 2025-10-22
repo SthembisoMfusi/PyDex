@@ -15,7 +15,7 @@ def main():
     parser = argparse.ArgumentParser()
 
     # adding different arguments
-    parser.add_argument("name", nargs='?', help="enter the name of the Pokemon")
+    parser.add_argument("name", nargs='?', help="enter the name or ID of the Pokemon")
     parser.add_argument("-r", "--random", action="store_true", help="lists info about a random pokemon")
     parser.add_argument("-a", "--abilities", action="store_true", help="shows the abilities of a pokemon")
     parser.add_argument("-s", "--size", action="store_true", help="shows the weight and height of a pokemon")
@@ -32,6 +32,7 @@ def main():
     # if the user searches by name
     elif args.name:
         pokemon_name = args.name.lower()
+        # API accepts both name and ID, so use input directly
         api_url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_name}"
 
     # if the user searches by id number
@@ -41,8 +42,9 @@ def main():
 
     # incase of no argument
     else:
-        print("Usage: python pokedex.py <pokemon_name> or python pokedex.py --random")
+        print("Usage: python pokedex.py <pokemon_name_or_id> or python pokedex.py --random")
         print("Example: python pokedex.py pikachu")
+        print("Example: python pokedex.py 25")
         sys.exit(1)
     
     try:
@@ -95,7 +97,7 @@ def main():
                 
         else:
             print(f"Error: Pokémon '{pokemon_name}' not found")
-            print("Please check the spelling and try again.")
+            print("Please check the spelling or ID and try again.")
             
     except requests.exceptions.RequestException as e:
         print(f"Error: Could not connect to the PokéAPI. {e}")
