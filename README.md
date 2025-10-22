@@ -2,12 +2,25 @@
 
 PyDex is a simple, easy-to-use Python script that lets you look up Pokémon information directly from your terminal. You type in a Pokémon's name, and PyDex fetches data from the free and public PokéAPI to display its stats, type, and more.
 
+PyDex also includes a modern graphical user interface (GUI) for those who prefer a visual experience.
+
 ## Features
 
-- Look up any Pokémon by name
+- Look up any Pokémon by name or ID number
 - Display basic information including name, Pokédex number, and types
+- View base stats with color-coded bars
+- See height, weight, abilities, and hidden abilities
 - Clean, simple command-line interface
+- Modern GUI with pokeball icon and visual Pokémon sprites
 - Uses the free PokéAPI (no API key required)
+
+### GUI Screenshots
+
+![PyDex Home Screen](screenshots/img1.png)
+
+![PyDex Pokemon Display](screenshots/img2.png)
+
+![PyDex Stats View](screenshots/img3.png)
 
 ## Getting Started
 
@@ -45,8 +58,11 @@ Run the Pokedex with a Pokémon name:
 # Make sure your virtual environment is activated
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Run the Pokedex
+# Run the command-line Pokedex
 python pokedex.py pikachu
+
+# Or run the GUI version
+python pokedex_gui.py
 ```
 
 **Example Output:**
@@ -84,7 +100,7 @@ We have several beginner-friendly issues available:
 ## Technology Stack
 
 - **Language**: Python 3
-- **Key Libraries**: `requests` (for HTTP requests)
+- **Key Libraries**: `requests` (for HTTP requests), `pillow` (for image processing in GUI)
 - **API**: [PokéAPI (v2)](https://pokeapi.co/) - Free, public API with no authentication required
 
 ## License
