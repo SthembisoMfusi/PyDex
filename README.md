@@ -8,8 +8,9 @@ PyDex also includes a modern graphical user interface (GUI) for those who prefer
 
 - Look up any Pokémon by name or ID number
 - Display basic information including name, Pokédex number, and types
-- View base stats with color-coded bars
-- See height, weight, abilities, and hidden abilities
+- View base stats (HP, Attack, Defense, Special Attack, Special Defense, Speed)
+- Optional flags to display abilities (including hidden abilities) and size (height/weight in metric units)
+- Search by Pokédex number or get a random Pokémon
 - Clean, simple command-line interface
 - Modern GUI with pokeball icon and visual Pokémon sprites
 - Uses the free PokéAPI (no API key required)
