@@ -156,6 +156,18 @@ def display_pokemon_info(data, show_abilities=False, show_size=False):
                                     and weight (in kilograms) will be printed.
                                     Defaults to False.
     """
+    width = 40  # you can tweak this for aesthetics
+    header_title = "POKÉDEX DATA"
+    footer_title = "End of Pokédex Entry"
+
+    def print_box(title):
+      print("╔" + "═" * (width - 2) + "╗")
+      print("║{:^{width}}║".format(title, width=width - 2))
+      print("╚" + "═" * (width - 2) + "╝")
+
+    # Print Header
+    print_box(header_title)
+
     print(f"\n{Fore.GREEN}--- {data['name'].title()} ---{Style.RESET_ALL}")
     print(f"  {Fore.CYAN}National Pokédex Number: {data['id']}{Style.RESET_ALL}")
 
@@ -209,6 +221,8 @@ def display_pokemon_info(data, show_abilities=False, show_size=False):
         print(f"    Weight: {weight_kg} kg")
     print(f"\n{Fore.GREEN}------------------{Style.RESET_ALL}")
 
+    # Print Footer
+    print_box(footer_title)
 
 def main():
     """
